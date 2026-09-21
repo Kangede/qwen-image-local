@@ -1,0 +1,7 @@
+interface:
+  display_name: "Qwen Image Local"
+  short_description: "Generate and edit images with local Qwen-Image-2.1"
+  icon_small: "./assets/qwen-image-local.svg"
+  icon_large: "./assets/qwen-image-local.svg"
+  brand_color: "#6750E6"
+  default_prompt: "Use $qwen-image-local to generate or edit an image through the configured local Qwen-Image-2.1 service."

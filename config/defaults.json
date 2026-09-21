@@ -1,0 +1,39 @@
+{
+  "model": "Qwen-Image-2.1",
+  "default_size": "1024x1024",
+  "num_inference_steps": 40,
+  "n": 1,
+  "guidance_scale": 1.0,
+  "seed": 42,
+  "generator_device": "cpu",
+  "output_format": "png",
+  "response_format": "b64_json",
+  "background": "auto",
+  "enable_cache_dit": false,
+  "request_timeout_seconds": 1200,
+  "preflight_timeout_seconds": 15,
+  "max_reference_images": 5,
+  "max_reference_bytes": 52428800,
+  "max_response_bytes": 134217728,
+  "aspect_ratio_tolerance": 0.02,
+  "aspect_ratios": {
+    "1:1": { "ratio": 1.0, "max_width": 2048, "max_height": 2048 },
+    "4:3": { "ratio": 1.3333333333333333, "max_width": 2400, "max_height": 1792 },
+    "3:4": { "ratio": 0.75, "max_width": 1792, "max_height": 2400 },
+    "3:2": { "ratio": 1.5, "max_width": 2528, "max_height": 1696 },
+    "2:3": { "ratio": 0.6666666666666666, "max_width": 1696, "max_height": 2528 },
+    "16:9": { "ratio": 1.7777777777777777, "max_width": 2752, "max_height": 1536 },
+    "9:16": { "ratio": 0.5625, "max_width": 1536, "max_height": 2752 }
+  },
+  "base_url_envs": [
+    "QWEN_IMAGE_BASE_URL",
+    "OPENAI_BASE_URL",
+    "ANTHROPIC_BASE_URL"
+  ],
+  "api_key_envs": [
+    "QWEN_IMAGE_API_KEY",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_AUTH_TOKEN",
+    "ANTHROPIC_API_KEY"
+  ]
+}
