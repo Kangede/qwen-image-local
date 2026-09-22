@@ -40,13 +40,17 @@ Do not place the key literal in `--api-key-env`; that argument accepts the envir
 | `response_format` | Always `b64_json`. |
 | `size` | Defaults to `1024x1024`; must pass the resolution rules below. |
 | `generator_device` | Fixed to `cpu` for deterministic request-side random-number generation. |
-| `seed` | Defaults to `42`; may be changed to a non-negative 32-bit integer. |
+| `seed` | Defaults to `42`; may be changed to a non-negative 32-bit integer. For edits, follow the seed policy below. |
 | `guidance_scale` | Defaults to `1`, which disables CFG. A value greater than `1` requires `--negative-prompt`. |
 | `output_format` | `png` or `jpeg`; `jpg` is normalized to `jpeg`. |
 | `background` | `auto` or `transparent`. Transparent output requires PNG. |
 | `enable_cache_dit` | Defaults to `false`. Enable only when explicitly requested and after accepting that caching can alter numerical output and needs quality evaluation. |
 
 JPEG may use `--output-compression 0..100`. PNG must not set compression through this option.
+
+### Seed policy for edits
+
+When editing or iteratively adjusting an image, choose a fresh non-negative 32-bit seed that differs from every known seed used to produce the current reference image or images, and pass it explicitly with `--seed`. If the reference image came from an external source and its seed is unknown, choose any fresh seed. Do not reuse a generation seed for an edit because it can add noise or blur to otherwise unchanged areas. Reuse the same seed only when the user explicitly requests it.
 
 ## Supported aspect ratios and upper bounds
 
@@ -93,7 +97,7 @@ PNG references keep their alpha channel during editing. RGB/JPEG references are 
 - Use one to five `--image` arguments in meaningful order.
 - Refer to them in the prompt as `Picture 1`, `Picture 2`, etc.
 - Repeat preservation constraints: what may change and what must stay unchanged.
-- For iterative editing, send the previous output as a new reference; the server keeps no editing conversation state.
+- For iterative editing, send the previous output as a new reference and use a different seed from the one that produced that reference; the server keeps no editing conversation state.
 - Reference PNG and JPEG files are supported by the CLI. Each file is capped at the byte limit in `config/defaults.json` before upload.
 
 ## CLI examples
@@ -132,6 +136,7 @@ python3 scripts/qwen_image.py edit \
   --image /path/to/subject.png \
   --image /path/to/style-reference.jpg \
   --prompt "Use Picture 1 as the subject and Picture 2 only as the visual style reference. Preserve Picture 1's identity and pose." \
+  --seed 43 \
   --out output/qwen-image/styled-subject.png
 ```
 

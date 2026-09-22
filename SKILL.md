@@ -40,6 +40,7 @@ In other agents or headless environments, report the absolute saved path and use
 - Native transparency requires PNG, `background=transparent`, and an explicit transparency instruction in the prompt. JPEG cannot retain alpha.
 - Width and height must be positive multiples of 32, match one of the supported aspect-ratio families, and never exceed that family's official maximum dimensions. The CLI validates this before any network request.
 - Image editing accepts at most five ordered reference images, even though the model itself can accept more.
+- When editing an image, use a fresh seed that differs from every known seed used to produce the current reference image or images; explicitly pass `--seed`. Reusing a generation seed for an edit can introduce noise or blur. Reuse the same seed only when the user explicitly requests it.
 - The default model alias is stored in `config/defaults.json` and may be overridden without editing the script.
 - Never print, log, or place an API key in command arguments. Keys must come from the current provider's environment variable or another supported environment variable.
 
@@ -75,6 +76,7 @@ python3 <skill-dir>/scripts/qwen_image.py generate \
 python3 <skill-dir>/scripts/qwen_image.py edit \
   --image /absolute/path/to/input.png \
   --prompt "Change only the red teapot to blue; preserve the table, window, composition, and lighting." \
+  --seed 43 \
   --out output/qwen-image/blue-teapot.png
 ```
 
